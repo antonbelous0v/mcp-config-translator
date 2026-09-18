@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import type { Route } from './+types/root'
-import { ColorSchemeScript } from '@mantine/core'
 import { useState } from 'react'
 import {
 	isRouteErrorResponse,
@@ -9,14 +8,11 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from 'react-router'
-import svgSprite from 'virtual:svg-icons/sprite'
 import { AppProviders } from './app/app.component'
 import { BaseLayout } from './app/baseLayout.component'
 import { createAppContainer } from './app/container/container'
-import { appColorScheme, forcedColorScheme } from './app/theme'
 import styles from './root.module.css'
 import { APP_CONFIG } from './shared/config'
-import '@mantine/core/styles.css'
 import './index.css'
 
 export const headers: Route.HeadersFunction = () => ({
@@ -27,22 +23,15 @@ export const headers: Route.HeadersFunction = () => ({
 
 export function Layout({ children }: { children: ReactNode }) {
 	return (
-		<html lang={APP_CONFIG.language} suppressHydrationWarning>
+		<html lang={APP_CONFIG.language}>
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<ColorSchemeScript
-					defaultColorScheme={appColorScheme}
-					forceColorScheme={forcedColorScheme}
-				/>
 				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 				<Meta />
 				<Links />
 			</head>
 			<body>
-				{/* SVG content is compiled from repository-owned files during the Vite build. */}
-				{/* eslint-disable-next-line react/dom-no-dangerously-set-innerhtml */}
-				<div aria-hidden="true" dangerouslySetInnerHTML={{ __html: svgSprite }} />
 				<a className={styles.skipLink} href="#main-content">Skip to content</a>
 				{children}
 				<ScrollRestoration />
@@ -54,7 +43,6 @@ export function Layout({ children }: { children: ReactNode }) {
 
 export default function Root() {
 	const [container] = useState(createAppContainer)
-
 	return (
 		<AppProviders container={container}>
 			<BaseLayout />

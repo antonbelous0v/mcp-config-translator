@@ -1,37 +1,36 @@
 import { expect, test } from '@playwright/test'
 
-test.use({ viewport: { width: 375, height: 812 } })
+const viewports = [
+	{ width: 320, height: 568 },
+	{ width: 375, height: 812 },
+	{ width: 768, height: 1024 },
+	{ width: 1440, height: 760 },
+]
 
-test('home page fits a small viewport without horizontal overflow', async ({ page }) => {
-	await page.route('https://jsonplaceholder.typicode.com/posts?userId=1', route =>
-		route.fulfill({ json: [] }))
+for (const viewport of viewports) {
+	test(`converter fits inside ${viewport.width}x${viewport.height}`, async ({ page }) => {
+		await page.setViewportSize(viewport)
+		await page.goto('/')
 
-	await page.goto('/')
+		const translator = page.locator('#translator')
+		const main = page.getByRole('main')
+		const box = await translator.boundingBox()
+		const mainBox = await main.boundingBox()
 
-	await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-	await expect(page.getByRole('link', { name: 'Trace a real request' })).toBeVisible()
+		await expect(page.getByRole('textbox', { name: 'Source config' })).toBeVisible()
+		await expect(page.getByRole('textbox', { name: 'Converted config' })).toBeVisible()
+		await expect(page.getByRole('button', { name: 'Convert config' })).toBeVisible()
+		expect(box).not.toBeNull()
+		expect(mainBox).not.toBeNull()
+		expect(box?.y).toBeGreaterThanOrEqual(0)
+		expect((box?.y ?? 0) + (box?.height ?? 0)).toBeLessThanOrEqual(viewport.height + 1)
+		expect((mainBox?.x ?? 0) + (mainBox?.width ?? 0)).toBeLessThanOrEqual(viewport.width)
 
-	const viewport = page.viewportSize()
-	const main = await page.getByRole('main').boundingBox()
-
-	expect(viewport).not.toBeNull()
-	expect(main).not.toBeNull()
-	expect((main?.x ?? 0) + (main?.width ?? 0)).toBeLessThanOrEqual(viewport?.width ?? 0)
-})
-
-test('hero keeps its actions visible on a wide, short viewport', async ({ page }) => {
-	await page.setViewportSize({ width: 1440, height: 760 })
-	await page.route('https://jsonplaceholder.typicode.com/posts?userId=1', route =>
-		route.fulfill({ json: [] }))
-
-	await page.goto('/')
-
-	const viewport = page.viewportSize()
-	const primaryAction = await page.getByRole('link', { name: 'Trace a real request' }).boundingBox()
-	const secondaryAction = await page.getByRole('link', { name: 'Test the state flow' }).boundingBox()
-
-	expect(primaryAction).not.toBeNull()
-	expect(secondaryAction).not.toBeNull()
-	expect((primaryAction?.y ?? 0) + (primaryAction?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0)
-	expect((secondaryAction?.y ?? 0) + (secondaryAction?.height ?? 0)).toBeLessThanOrEqual(viewport?.height ?? 0)
-})
+		for (const control of await translator.locator('button, select, textarea').all()) {
+			const controlBox = await control.boundingBox()
+			expect(controlBox).not.toBeNull()
+			expect(controlBox?.x).toBeGreaterThanOrEqual(0)
+			expect((controlBox?.x ?? 0) + (controlBox?.width ?? 0)).toBeLessThanOrEqual(viewport.width)
+		}
+	})
+}

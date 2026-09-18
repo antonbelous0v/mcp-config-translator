@@ -1,7 +1,5 @@
 export const APP_CONFIG = {
-	colorScheme: 'dark',
-	description: 'A resettable React 19 starter with SSR, enforceable boundaries, typed data flow, DI, and production quality gates.',
+	description: 'Detect, validate, and translate MCP server configurations between 12 clients in the browser.',
 	language: 'en',
-	name: 'Frontend Starter',
-	primaryColor: 'lime',
+	name: 'MCP Config Translator',
 } as const

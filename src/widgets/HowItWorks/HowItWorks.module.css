@@ -1,0 +1,72 @@
+.root {
+	display: grid;
+	grid-template-columns: 0.8fr 1.2fr;
+	gap: 5.6rem;
+	padding: 7rem 2.1rem;
+}
+
+.kicker {
+	margin: 0;
+	color: var(--color-accent-strong);
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+
+.intro h2 {
+	margin: 0.3rem 0 0;
+	font-size: clamp(2rem, 4vw, 3.15rem);
+	letter-spacing: -0.04em;
+	line-height: 1.08;
+}
+
+.intro > p:last-child {
+	max-width: 24rem;
+	margin: 1.4rem 0 0;
+	color: var(--color-text-muted);
+	font-size: 0.95rem;
+	line-height: 1.65;
+}
+
+.steps {
+	padding: 0;
+	margin: 0;
+	border-top: 1px solid var(--color-border);
+	list-style: none;
+}
+
+.steps li {
+	display: grid;
+	grid-template-columns: 3.6rem 1fr;
+	gap: 0.65rem;
+	padding: 1.4rem 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.steps > li > span {
+	color: var(--color-orange);
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	font-weight: 800;
+}
+
+.steps h3 {
+	margin: 0 0 0.4rem;
+	font-size: 0.95rem;
+}
+
+.steps p {
+	margin: 0;
+	color: var(--color-text-muted);
+	font-size: 0.8rem;
+	line-height: 1.55;
+}
+
+@media (width <= 52rem) {
+	.root {
+		grid-template-columns: 1fr;
+		gap: 2.8rem;
+		padding: 5rem 0.5rem;
+	}
+}

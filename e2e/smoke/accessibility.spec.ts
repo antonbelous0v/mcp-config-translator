@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
 test('home page has no automatically detectable accessibility violations', async ({ page }) => {
 	await page.emulateMedia({ reducedMotion: 'reduce' })
 	await page.goto('/')
-	await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+	await expect(page.getByRole('textbox', { name: 'Source config' })).toBeVisible()
 
 	const { violations } = await new AxeBuilder({ page }).analyze()
 

@@ -1,0 +1,10 @@
+.main {
+	width: min(77.5rem, calc(100% - 2.5rem));
+	margin-inline: auto;
+}
+
+@media (width <= 52rem) {
+	.main {
+		width: min(42.5rem, calc(100% - 1.5rem));
+	}
+}

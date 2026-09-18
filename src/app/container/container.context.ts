@@ -3,18 +3,10 @@ import { createContext, use } from 'react'
 
 export const AppContainerContext = createContext<Container | null>(null)
 
-function useAppContainer() {
+export function useService<T>(token: Token<T>) {
 	const container = use(AppContainerContext)
-
 	if (!container) {
 		throw new Error('AppContainerProvider is missing in the React tree.')
 	}
-
-	return container
+	return container.get(token)
 }
-
-/**
- * Feature and page integration point.
- * @public
- */
-export const useService = <T>(token: Token<T>) => useAppContainer().get(token)

@@ -1,0 +1,35 @@
+.root {
+	padding: 1.25rem 1.75rem;
+	border-top: 1px solid #f0c7a9;
+	background: #fff4e9;
+	color: #713b28;
+}
+
+.heading {
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+}
+
+.heading svg {
+	width: 1.1rem;
+	fill: none;
+	stroke: #ae4f2e;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 1.8;
+}
+
+.heading h3 {
+	margin: 0;
+	font-size: 0.8rem;
+}
+
+.root ul {
+	display: grid;
+	gap: 0.45rem;
+	padding: 0 0 0 1.7rem;
+	margin: 0.75rem 0 0;
+	font-size: 0.75rem;
+	line-height: 1.45;
+}

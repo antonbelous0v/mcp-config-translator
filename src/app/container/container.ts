@@ -5,9 +5,7 @@ const providerModules = import.meta.glob<ProviderModule>([
 	'../../entities/**/*.provider.ts',
 	'../../features/**/*.provider.ts',
 	'../../shared/**/*.provider.ts',
-], {
-	eager: true,
-})
+], { eager: true })
 
 export function createAppContainer() {
 	const container = new Container()
@@ -16,7 +14,6 @@ export function createAppContainer() {
 		if (typeof module.provider !== 'function') {
 			throw new TypeError(`[DI] Invalid provider module: ${modulePath}`)
 		}
-
 		module.provider(container)
 	}
 
