@@ -1,0 +1,83 @@
+{
+	"name": "js-template",
+	"type": "module",
+	"version": "0.0.0",
+	"private": true,
+	"packageManager": "npm@11.6.2",
+	"engines": {
+		"node": ">=24 <25"
+	},
+	"scripts": {
+		"dev": "react-router dev",
+		"typecheck": "react-router typegen && tsc -b --pretty false",
+		"build": "npm run typecheck && react-router build",
+		"start": "react-router-serve ./build/server/index.js",
+		"lint": "eslint . --cache --max-warnings 0 && npm run lint:styles && npm run lint:architecture",
+		"lint:architecture": "node scripts/check-architecture.mjs",
+		"lint:fix": "eslint . --cache --fix && npm run lint:styles:fix",
+		"lint:styles": "node scripts/check-style-files.mjs && stylelint \"src/**/*.css\"",
+		"lint:styles:fix": "stylelint \"src/**/*.css\" --fix && node scripts/check-style-files.mjs",
+		"knip": "knip",
+		"test": "vitest",
+		"test:unit": "vitest run --passWithNoTests",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
+		"check": "npm run lint && npm run test:unit && npm run build && npm run knip",
+		"template:setup": "node scripts/setup-template.mjs",
+		"prepare": "husky"
+	},
+	"dependencies": {
+		"@mantine/core": "^9.6.1",
+		"@mantine/hooks": "^9.5.2",
+		"@needle-di/core": "^1.2.1",
+		"@react-router/node": "^8.3.1",
+		"@react-router/serve": "^8.3.1",
+		"@reatom/core": "^1001.3.0",
+		"@reatom/react": "^1001.0.1",
+		"isbot": "^5.2.2",
+		"react": "^19.3.0",
+		"react-dom": "^19.3.0",
+		"react-router": "^8.3.1"
+	},
+	"devDependencies": {
+		"@antfu/eslint-config": "9.5.1",
+		"@axe-core/playwright": "^4.13.0",
+		"@boundaries/eslint-plugin": "^7.2.0",
+		"@eslint-react/eslint-plugin": "^5.19.0",
+		"@playwright/test": "^1.63.0",
+		"@react-router/dev": "^8.3.1",
+		"@react-router/fs-routes": "^8.3.1",
+		"@types/node": "^24.13.4",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"eslint": "^10.10.0",
+		"eslint-import-resolver-typescript": "^4.4.5",
+		"eslint-plugin-format": "^2.0.1",
+		"eslint-plugin-react-refresh": "^0.5.6",
+		"husky": "^9.1.7",
+		"knip": "^6.35.1",
+		"lint-staged": "^17.5.1",
+		"stylelint": "^17.15.0",
+		"stylelint-config-standard": "^40.0.0",
+		"typescript": "~5.9.3",
+		"vite": "^8.3.0",
+		"vite-plugin-svg-icons-ng": "^1.9.3",
+		"vitest": "^4.1.11"
+	},
+	"overrides": {
+		"eslint-plugin-regexp": "3.1.1"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx}": [
+			"eslint --cache --fix",
+			"vitest related --run"
+		],
+		"*.{css,scss}": [
+			"stylelint --fix",
+			"node scripts/check-style-files.mjs"
+		],
+		"*.{json,html}": [
+			"eslint --fix"
+		]
+	}
+}
